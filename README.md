@@ -18,7 +18,7 @@ This Readme should provide all information necessary to use this repository for 
 - [Documentation](#1-documentation)
 - [Purpose](#2-what-is-the-purpose-of-this-repository)
 - [Installing DDSCAT](#3-installing-ddscat)
-- [Python requierments](#4-python-requirements)
+- [Python requirements](#4-python-requirements)
 - [DDSCAT run workflow](#5-ddscat-run-workflow)
 - [Additional scripts](#6-additional-analysis-scripts)
 - [Plotting choices](#7-plotting-choices)
