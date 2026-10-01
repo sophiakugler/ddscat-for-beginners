@@ -44,7 +44,7 @@ The workflow provided here is intended for people who never used DDSCAT before. 
 
 DDSCAT (Discrete Dipole SCATtering) is a Fortran-code which calculates how light interacts with a particle using the Discrete Dipole Approximation (DDA). Very roughly, DDSCAT replaces a real dust grain by small dipoles and solves interaction of light with these dipoles, from which it then computes absorption and scattering. Since it needs to solve the interaction of each dipole, increasing the number of dipoles becomes more and more expensive. The mathematical details of DDA are however not needed for a first application of this tool.
 
-For first-time users, it is recommended to directly go to the [quickstart guide](#quickstart--setting-up-a-first-ddscat-run).
+For first-time users, it is recommended to directly go to the [quickstart guide](#9-quickstart--setting-up-a-first-ddscat-run).
 
 ## 3. Installing DDSCAT
 
