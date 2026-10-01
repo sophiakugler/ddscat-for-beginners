@@ -15,16 +15,28 @@ starting point for users who are new to DDSCAT.
 
 This Readme should provide all information necessary to use this repository for setting up a first successful DDSCAT-run.
 
-- [Documentation](#1-documentation)
-- [Purpose](#2-what-is-the-purpose-of-this-repository)
+### Getting started
+
+- [Quickstart guide](#9-quickstart--setting-up-a-first-ddscat-run)
 - [Installing DDSCAT](#3-installing-ddscat)
-- [Python requierments](#4-python-requirements)
+- [Python requirements](#4-python-requirements)
+
+### Running DDSCAT
+
 - [DDSCAT run workflow](#5-ddscat-run-workflow)
+- [Minimal workflow example](#8-minimal-workflow)
+
+### Analysis and additional tools
+
 - [Additional scripts](#6-additional-analysis-scripts)
 - [Plotting choices](#7-plotting-choices)
-- [Minimal workflow example](#8-minimal-workflow)
-- [Quickstart guide](#9-quickstart--setting-up-a-first-ddscat-run)
-- [References](#10-references-and-further-information)
+
+### Background
+
+- [Documentation](#1-documentation)
+- [Purpose of this repository](#2-what-is-the-purpose-of-this-repository)
+- [References and further information](#10-references-and-further-information)
+
 
 ## 1. Documentation
 
