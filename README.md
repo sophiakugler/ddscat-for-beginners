@@ -11,7 +11,7 @@ starting point for users who are new to DDSCAT.
 > used during this project. Paths and numerical parameters should still be
 > checked before using them for a new setup.
 
-## Documentation
+## 1. Documentation
 
 A more detailed introduction is available here:
 
@@ -21,7 +21,15 @@ The manual explains the main DDSCAT input files, `ddscat.par`, material files,
 custom `shape.dat` targets, important output files, convergence checks, and a
 complete example calculation.
 
-## Installing DDSCAT
+## 2. What is the purpose of this repository?
+
+The workflow provided here is intended for people who never used DDSCAT before. It contains everything needed for setting up, running and analysing basic DDSCAT calculations.
+
+### 2.1 What is DDSCAT?
+
+DDSCAT (Discrete Diploe SCATtering) is a Fortran-code which calculates how light interacts with a particle using the Discrete Dipole Approximation (DDA). Very roughly, DDSCAT replaces a real dust grain by small dipoles and solves interaction of light with these dipoles, from which it then computes absorption and scattering. Since it needs to solve the interaction of each dipole, increasing the number of dipoles becomes more and more expensive. The mathematical details of DDA are however not needed for a first application of this tool.
+
+## 3. Installing DDSCAT
 
 DDSCAT itself is not included in this repository.
 
@@ -51,7 +59,7 @@ DDA/
 The exact location does not matter, but the paths in `input.toml` must be
 changed accordingly.
 
-### Compile DDSCAT
+### 3.1 Compile DDSCAT
 
 DDSCAT is written in Fortran. On Linux, `gfortran` can be used.
 
@@ -78,7 +86,9 @@ Check that it exists with:
 ls -l ~/DDA/src/ddscat
 ```
 
-## Python requirements
+After compiling is done, this executable is the file which DDSCAT uses for running and calculating.
+
+## 4. Python requirements
 
 The helper scripts use Python 3. Some analysis scripts additionally require
 NumPy, Matplotlib, and SciPy.
@@ -91,7 +101,7 @@ The automated workflow uses Python 3.11 or newer.
 
 ---
 
-# DDSCAT run workflow
+## 5. DDSCAT run workflow
 
 This repository is meant to help users get familiar with DDSCAT without
 having to understand the Fortran source code itself.
@@ -118,7 +128,7 @@ The user normally only edits `input.toml`. The Python helper then generates
 For background information on the individual DDSCAT parameters, see the
 accompanying manual and the official DDSCAT User Guide.
 
-## Files in this repository
+### 5.1 Files in this repository
 
 ```text
 .
@@ -140,21 +150,6 @@ accompanying manual and the official DDSCAT User Guide.
     ├── runtime_vs_wavelength.py
     ├── visualize_shape_3d.py
     └── visualize_shape_slice.py
-└── applications-example/
-    ├── generate_ddscat.py
-    ├── input.toml
-    ├── main.sh
-    ├── run_ddscat_pipeline.py
-    └── example-data/
-        └── dust_models_mie/
-            └── astrosil_0.001um/
-                └── dustkappa.dat
-            └── astrosil_0.01um/
-                └── dustkappa.dat
-            └── astrosil_0.1um/
-                └── dustkappa.dat
-            └── astrosil_1.0um/
-                └── dustkappa.dat
 
 ```
 
@@ -176,7 +171,7 @@ analysing runtimes.
 
 ---
 
-## Before running
+### 5.2 Before running
 
 DDSCAT must already be compiled.
 
@@ -249,7 +244,7 @@ consult the DDSCAT manual before changing them substantially.
 
 ---
 
-## 1. Edit `input.toml`
+### 1. Edit `input.toml`
 
 The most commonly changed entries are:
 
@@ -323,7 +318,7 @@ polarizability = "GKDLDR"
 
 ---
 
-## 2. Generate the DDSCAT input files
+### 2. Generate the DDSCAT input files
 
 From the repository directory:
 
@@ -351,7 +346,7 @@ cat /path/to/run_directory/ddscat.par
 
 ---
 
-## 3. Run DDSCAT locally
+### 3. Run DDSCAT locally
 
 The same shell script can be run directly without Slurm:
 
@@ -370,7 +365,7 @@ DDSCAT normal termination
 
 ---
 
-## 4. Run DDSCAT with Slurm
+### 4. Run DDSCAT with Slurm
 
 The Slurm settings are at the top of `main.sh`:
 
@@ -411,7 +406,7 @@ ddscat_<jobid>.err
 
 ---
 
-## 5. Check whether the calculation finished
+### 5. Check whether the calculation finished
 
 Run:
 
@@ -444,7 +439,7 @@ selected wavelength, material and dipole resolution are reasonable.
 
 ---
 
-## 6. Important output files
+### 6. Important output files
 
 DDSCAT can create many output files. The most useful ones for a first analysis
 are:
@@ -473,7 +468,7 @@ It can differ from the outer physical radius of the grain.
 
 ---
 
-## 7. Make a quick plot
+### 7. Make a quick plot
 
 After a successful run:
 
@@ -492,7 +487,7 @@ wavelength.
 
 ---
 
-## Additional analysis scripts
+## 6. Additional analysis scripts
 
 The `scripts/` directory contains small scripts used during the project.
 
@@ -631,7 +626,7 @@ beginning to match your own run structure.
 
 ---
 
-## Plotting choices
+## 7. Plotting choices
 
 The analysis scripts contain settings such as:
 
@@ -640,13 +635,7 @@ X_SCALE = "log"
 Y_SCALE = "log"
 ```
 
-Change either value to:
-
-```python
-"linear"
-```
-
-for a linear axis.
+Comment out one or both in case you want linear spacing (which can look clearer in many cases). 
 
 This only changes the plot. It does not change the wavelength distribution
 used by DDSCAT.
@@ -665,7 +654,7 @@ Available DDSCAT spacing options are:
 
 ---
 
-## Minimal workflow
+## 8. Minimal workflow
 
 For an already compiled DDSCAT installation, the complete workflow is:
 
@@ -690,20 +679,10 @@ bash main.sh my_input.toml
 The copied TOML input file is normally the only file that needs to be edited
 for a new simulation.
 
----
-
-## The application example
-
-The example is a demonstration for application of the presented workflow. This directory contains routines for advanced applications and is still in active development. It can be safely ignored by first-time beginners, as it is not needed nor directly connected to the basic workflow presented in this repository!
-
-The folder contains example data for Astrosilicate (Draine 2003), which was pre-calculated using the Mie setting in optool (https://github.com/cdominik/optool).
-The pipeline presented here is able to calculate the absorption and scattering efficiency with a pre-defined target number of dipoles for different fixed grain sizes. 
-It then produces plots for visual comparison of convergence against the Mie-solution. Also calculated are RMSE-values for the scattering and absorption efficiencies.
-While this pipeline is currently being actively used and developed, it still might contain some bugs and errors, which are hopefully eliminated in the near future.
 
 ---
 
-## References and further information
+## 9. References and further information
 
 - B. T. Draine & P. J. Flatau, DDSCAT User Guide
 - B. T. Draine & P. J. Flatau (1994), *Discrete-dipole approximation for
