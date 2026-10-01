@@ -1,10 +1,6 @@
 # DDSCAT for Beginners
 
-This repository contains a small collection of scripts for setting up, running, and analysing DDSCAT calculations.
-
-It is intended as a practical starting point for users who have never used DDSCAT before.
-
-You do **not** need to understand the DDSCAT Fortran source code to use this repository.
+This repository contains a small collection of scripts for setting up, running, and analysing DDSCAT calculations. It is intended as a practical starting point for users who have never used DDSCAT before. You do not need to understand the DDSCAT Fortran source code to use this repository.
 
 For a first calculation, you normally only need to edit one file:
 
@@ -36,23 +32,15 @@ Very roughly, DDSCAT replaces a particle by many small dipoles:
 
 ```text
 real particle
-
       ↓
-
 many small dipoles
-
       ↓
-
 interaction with light
-
       ↓
-
 absorption + scattering
 ```
 
-More dipoles usually give a better representation of the particle, but also require more computation time.
-
-For your first DDSCAT calculation, you do not need to understand the mathematical details.
+More dipoles usually give a better representation of the particle, but also require more computation time. For your first DDSCAT calculation, you do not need to understand the mathematical details.
 
 A more detailed introduction is available here:
 
@@ -124,23 +112,15 @@ python3 -m pip install numpy matplotlib scipy
 
 ---
 
-# 3. Your first DDSCAT calculation
+# 3. A first DDSCAT calculation
 
-For your first run:
-
-> **Do not edit `ddscat.par` manually.**
->
-> **Do not modify the Python scripts.**
->
-> Start by changing only `input.toml`.
-
-Make a copy:
+For your first run, make a copy of the input.toml file:
 
 ```bash
 cp input.toml my_input.toml
 ```
 
-Open it:
+Edit it 
 
 ```bash
 nano my_input.toml
@@ -207,9 +187,7 @@ For example:
 
 # 5. Choose a particle
 
-For the first test, use DDSCAT's built-in `ELLIPSOID` target.
-
-You do not need a separate `shape.dat` file for this.
+For the first test, use DDSCAT's built-in `ELLIPSOID` target. You do not need a separate `shape.dat` file for this.
 
 Use:
 
@@ -234,9 +212,7 @@ does **not** mean
 50 µm
 ```
 
-It roughly describes how many dipole spacings fit across the particle.
-
-The physical size of the particle is set separately.
+It roughly describes how many dipole spacings fit across the particle. The physical size of the particle is set separately.
 
 ---
 
@@ -278,11 +254,7 @@ count = 20
 spacing = "LIN"
 ```
 
-This calculates 20 wavelengths between 1 and 10 µm.
-
-Do not start with hundreds or thousands of wavelengths.
-
-First make sure that the basic calculation works.
+This calculates 20 wavelengths between 1 and 10 µm. Do not start with hundreds or thousands of wavelengths, first make sure that the basic calculation works!
 
 ---
 
@@ -301,7 +273,7 @@ fft = "GPFAFT"
 polarizability = "GKDLDR"
 ```
 
-You normally do not need to change these settings for a first calculation.
+You normally do not need to change these settings for a first test.
 
 ---
 
@@ -331,11 +303,7 @@ You can check your Slurm job with:
 squeue -u $USER
 ```
 
-The `#SBATCH` settings are located at the top of `main.sh`.
-
-A normal serial DDSCAT executable uses one CPU.
-
-Requesting more CPUs does not automatically make DDSCAT faster.
+The `#SBATCH` settings are located at the top of `main.sh`. A normal serial DDSCAT executable uses one CPU; requesting more CPUs does not automatically make DDSCAT faster!
 
 ---
 
@@ -418,11 +386,7 @@ FATAL ERROR IN PROCEDURE: ZBCG2WP
 ITERN>ITERMX
 ```
 
-This means the iterative solver did not converge before reaching the maximum number of iterations.
-
-Do **not** automatically increase `max_iterations`.
-
-First check:
+This means the iterative solver did not converge before reaching the maximum number of iterations. Do not straight away increase `max_iterations`, first check:
 
 - wavelength
 - material
@@ -552,7 +516,7 @@ Once the simple test works, you can start changing:
 - material composition
 - custom `shape.dat` targets
 
-Change **one thing at a time** when you are learning DDSCAT.
+Change one thing at a time when you are learning DDSCAT. In this way you can easy keep track of what changing one parameter actually does to the output.
 
 ---
 
@@ -638,11 +602,7 @@ Everything inside:
 scripts/
 ```
 
-is optional.
-
-You do **not** need these scripts to perform a basic DDSCAT calculation.
-
-They provide examples for more specialised tasks.
+is optional. You do not need these scripts to perform a basic DDSCAT calculation. They provide examples for more specialised tasks!
 
 ## `compare_qtables.py`
 
@@ -671,9 +631,7 @@ Generates porous spherical `shape.dat` targets.
 
 ## `generate_oblate_shape.py`
 
-Generates an oblate ellipsoidal `shape.dat`.
-
-For a homogeneous ellipsoid, using DDSCAT's built-in `ELLIPSOID` target is usually easier.
+Generates an oblate ellipsoidal `shape.dat`. For a homogeneous ellipsoid, using DDSCAT's built-in `ELLIPSOID` target is usually easier.
 
 ---
 
@@ -768,9 +726,7 @@ checks whether it worked.
 plot_qtable.py
 ```
 
-plots the result.
-
-Everything else can wait until you need it.
+plots the result. Everything else can wait until you need it.
 
 ---
 
