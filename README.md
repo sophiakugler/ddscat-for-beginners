@@ -51,20 +51,20 @@ The basic workflow is:
 ```text
 
 install DDSCAT
-&#x20;     ↓
+    ↓
 edit input.toml
-&#x20;     ↓
+     ↓
 generate input files
-&#x20;     ↓
+     ↓
 run DDSCAT
-&#x20;     ↓
+     ↓
 check the run
-&#x20;     ↓
+     ↓
 plot the results
 
 ```
 
-For your first test, **\*\*do not modify the Python scripts or `ddscat.par` manually\*\***. &#x20; In most cases, you only need to edit a copy of `input.toml`.
+For your first test, **\*\*do not modify the Python scripts or `ddscat.par` manually\*\***.  In most cases, you only need to edit a copy of `input.toml`.
 
 ---
 
@@ -172,7 +172,7 @@ shape_parameters = [50.0, 50.0, 50.0]
 
 ```
 
-This describes a spherical dipole target. **\*\*Important:\*\*** `50` is **\*\*not\*\*** the grain radius in micrometres. &#x20; It approximately describes the number of dipole spacings across the particle. Set the actual physical grain radius separately:
+This describes a spherical dipole target. **\*\*Important:\*\*** `50` is **\*\*not\*\*** the grain radius in micrometres.  It approximately describes the number of dipole spacings across the particle. Set the actual physical grain radius separately:
 
 ```toml
 
@@ -433,15 +433,15 @@ This repository is meant to help users get familiar with DDSCAT without having t
 ```text
 
 input.toml
-&#x20;   ↓
+   ↓
 generate_ddscat.py
-&#x20;   ↓
+   ↓
 ddscat.par
-&#x20;   ↓
+   ↓
 main.sh
-&#x20;   ↓
+   ↓
 DDSCAT
-&#x20;   ↓
+   ↓
 qtable / .avg / .sca / log files
 
 ```
@@ -464,15 +464,15 @@ The user normally only edits `input.toml`. The Python helper then generates `dds
 ├── main.txt
 ├── ddscat_for_beginners.pdf
 └── scripts/
-&#x20;   ├── compare_qtables.py
-&#x20;   ├── generate_oblate_shape.py
-&#x20;   ├── generate_porous_sphere.py
-&#x20;   ├── generate_two_material_sphere.py
-&#x20;   ├── plot_multiple_qtables.py
-&#x20;   ├── plot_shape_slice.py
-&#x20;   ├── runtime_vs_wavelength.py
-&#x20;   ├── visualize_shape_3d.py
-&#x20;   └── visualize_shape_slice.py
+   ├── compare_qtables.py
+   ├── generate_oblate_shape.py
+   ├── generate_porous_sphere.py
+   ├── generate_two_material_sphere.py
+   ├── plot_multiple_qtables.py
+   ├── plot_shape_slice.py
+   ├── runtime_vs_wavelength.py
+   ├── visualize_shape_3d.py
+   └── visualize_shape_slice.py
 
 ```
 
@@ -871,13 +871,13 @@ Generates custom porous spherical targets as `shape.dat` files. Change the poros
 ```python
 
 POROSITIES = [
-&#x20;   0.0,
-&#x20;   0.1,
-&#x20;   0.2,
-&#x20;   0.3,
-&#x20;   0.4,
-&#x20;   0.5,
-&#x20;   0.6,
+   0.0,
+   0.1,
+   0.2,
+   0.3,
+   0.4,
+   0.5,
+   0.6,
 ]
 
 ```
@@ -958,7 +958,7 @@ Y_SCALE = "log"
 
 ```
 
-Comment out one or both in case you want linear spacing (which can look clearer in many cases).&#x20; This only changes the plot. It does not change the wavelength distribution used by DDSCAT. The DDSCAT wavelength grid itself is controlled separately in `input.toml`:
+Comment out one or both in case you want linear spacing (which can look clearer in many cases). This only changes the plot. It does not change the wavelength distribution used by DDSCAT. The DDSCAT wavelength grid itself is controlled separately in `input.toml`:
 
 ```toml
 
@@ -979,7 +979,7 @@ Available DDSCAT spacing options are:
 - B. T. Draine & P. J. Flatau, DDSCAT User Guide
 - B. T. Draine & P. J. Flatau (1994), \*Discrete-dipole approximation for
 
-&#x20; scattering calculations\*, Journal of the Optical Society of America A, &#x20; 11, 1491.
+ scattering calculations\*, Journal of the Optical Society of America A,  11, 1491.
 
 - Official DDSCAT download page:
 
