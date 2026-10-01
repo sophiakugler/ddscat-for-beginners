@@ -11,386 +11,6 @@ starting point for users who are new to DDSCAT.
 > used during this project. Paths and numerical parameters should still be
 > checked before using them for a new setup.
 
----
-
-## Quickstart — Setting up a first DDSCAT run
-
-If you are completely new to DDSCAT, start here.
-
-The basic workflow is:
-
-```text
-install DDSCAT
-      ↓
-edit input.toml
-      ↓
-generate input files
-      ↓
-run DDSCAT
-      ↓
-check the run
-      ↓
-plot the results
-```
-
-For your first test, **do not modify the Python scripts or `ddscat.par` manually**.  
-In most cases, you only need to edit a copy of `input.toml`.
-
----
-
-### 1. Clone the repository
-
-```bash
-git clone <repository-url>
-cd ddscat-for-beginners
-```
-
----
-
-### 2. Install and compile DDSCAT
-
-DDSCAT itself is **not included** in this repository.
-
-Download DDSCAT 7.3.4 and the example package from the official DDSCAT website.
-
-A useful directory structure is for example:
-
-```text
-~/DDA/
-├── src/
-│   └── ddscat
-├── examples_exp/
-├── diel/
-└── doc/
-```
-
-Compile DDSCAT:
-
-```bash
-cd ~/DDA/src
-make ddscat
-```
-
-Check that the executable exists:
-
-```bash
-ls -l ~/DDA/src/ddscat
-```
-
-If the file is there, DDSCAT is ready to use.
-
----
-
-### 3. Install the Python requirements
-
-The helper scripts require Python 3.11 or newer.
-
-Install the required packages:
-
-```bash
-python3 -m pip install numpy matplotlib scipy
-```
-
----
-
-### 4. Create your own input file
-
-Do not edit the repository example directly. Make a copy:
-
-```bash
-cp input.toml my_input.toml
-```
-
-Then open it:
-
-```bash
-nano my_input.toml
-```
-
-or use your preferred editor.
-
-For a first run, the most important settings are:
-
-```toml
-[paths]
-
-ddscat_executable = "/home/USER/DDA/src/ddscat"
-run_directory = "/path/to/your/ddscat_run"
-material_file = "/home/USER/DDA/diel/astrosil"
-```
-
-Make sure all three paths exist.
-
----
-
-### 5. Choose a simple target
-
-For your first calculation, using DDSCAT's built-in `ELLIPSOID` target is easiest because no `shape.dat` file is required.
-
-For example:
-
-```toml
-[target]
-
-shape = "ELLIPSOID"
-shape_parameters = [50.0, 50.0, 50.0]
-```
-
-This describes a spherical dipole target.
-
-**Important:** `50` is **not** the grain radius in micrometres.  
-It approximately describes the number of dipole spacings across the particle.
-
-Set the actual physical grain radius separately:
-
-```toml
-[effective_radius]
-
-minimum_um = 1.0
-maximum_um = 1.0
-count = 1
-spacing = "LIN"
-```
-
-For example, this gives a grain with an effective radius of
-
-```text
-a_eff = 1 µm
-```
-
----
-
-### 6. Choose a small wavelength grid for testing
-
-Do not start with hundreds or thousands of wavelengths.
-
-A small first test could be:
-
-```toml
-[wavelength]
-
-minimum_um = 1.0
-maximum_um = 10.0
-count = 20
-spacing = "LIN"
-```
-
-Once everything works, you can increase the wavelength resolution.
-
-For the first run, leave the numerical parameters at their defaults unless you know why you need to change them:
-
-```toml
-[numerics]
-
-tolerance = 1.0e-5
-max_iterations = 1000
-
-solver = "PBCGS2"
-fft = "GPFAFT"
-polarizability = "GKDLDR"
-```
-
----
-
-### 7. Generate the DDSCAT input files
-
-From the repository directory, run:
-
-```bash
-python3 generate_ddscat.py my_input.toml
-```
-
-The configured run directory should now contain at least:
-
-```text
-ddscat.par
-diel.dat
-```
-
-For a `FROM_FILE` target it will additionally contain:
-
-```text
-shape.dat
-```
-
-For your first run, it is worth checking that `ddscat.par` was actually created:
-
-```bash
-cat /path/to/your/ddscat_run/ddscat.par
-```
-
-You normally do **not** need to edit this file manually.
-
----
-
-### 8. Run DDSCAT
-
-#### On a local machine (most likely for starters)
-
-Run:
-
-```bash
-bash main.sh my_input.toml
-```
-
-#### On a Slurm cluster (useful for more expensive calculations later on)
-
-First check the `#SBATCH` settings at the top of `main.sh` and adapt them to your cluster if necessary.
-
-Then submit:
-
-```bash
-sbatch main.sh my_input.toml
-```
-
-Check whether the job is running:
-
-```bash
-squeue -u $USER
-```
-
-A standard DDSCAT build is serial, so requesting additional CPUs normally does not make the calculation faster!
-
----
-
-### 9. Check whether the run worked
-
-After DDSCAT finishes, run:
-
-```bash
-python3 check_run.py my_input.toml
-```
-
-For a successful run you should see something similar to:
-
-```text
-qtable rows: 20 / 20
-status: DDSCAT normal termination
-```
-
-The most important part is:
-
-```text
-DDSCAT normal termination
-```
-
-If fewer wavelength rows than expected are present, the calculation probably stopped before completing all wavelengths.
-
-A common error is:
-
-```text
-FATAL ERROR IN PROCEDURE: ZBCG2WP
-ITERN>ITERMX
-```
-
-This means that the iterative solver did not converge within the allowed number of iterations.
-
-Do not immediately increase `max_iterations`. First check the wavelength, material properties and dipole resolution.
-
----
-
-### 10. Make a first plot
-
-If the run completed successfully:
-
-```bash
-python3 plot_qtable.py my_input.toml
-```
-
-This creates:
-
-```text
-qtable_overview.png
-```
-
-inside the run directory.
-
-The plot shows the main DDSCAT efficiency factors:
-
-```text
-Qabs   absorption
-Qsca   scattering
-Qext   extinction
-```
-
-with
-
-```text
-Qext = Qabs + Qsca
-```
-
----
-
-### What should I look at after my first successful run?
-
-The most important DDSCAT output file for a beginner is:
-
-```text
-qtable
-```
-
-It contains wavelength-dependent quantities such as:
-
-```text
-Qext
-Qabs
-Qsca
-g
-```
-
-More detailed information is stored in files such as:
-
-```text
-wXXXrXXX.avg
-wXXXrXXXkXXX.sca
-target.out
-ddscat.log_000
-```
-
-You do not need to understand all of these for your first calculation.
-
----
-
-### The complete beginner workflow
-
-Once DDSCAT is installed, the workflow for most new calculations is simply:
-
-```bash
-cp input.toml my_input.toml
-
-nano my_input.toml
-
-python3 generate_ddscat.py my_input.toml
-
-sbatch main.sh my_input.toml
-
-python3 check_run.py my_input.toml
-
-python3 plot_qtable.py my_input.toml
-```
-
-or, without Slurm:
-
-```bash
-bash main.sh my_input.toml
-```
-
-If this produces `DDSCAT normal termination` and `qtable_overview.png`, your basic DDSCAT setup works.
-
-From here you can start experimenting with:
-
-- different effective grain radii,
-- different wavelength ranges,
-- different materials,
-- higher dipole resolutions,
-- non-spherical targets,
-- porous grains,
-- or custom `shape.dat` files.
-
-The additional scripts in `scripts/` are optional and are **not required for running DDSCAT**.
-
----
-
 ## 1. Documentation
 
 A more detailed introduction is available here:
@@ -408,6 +28,8 @@ The workflow provided here is intended for people who never used DDSCAT before. 
 ### 2.1 What is DDSCAT?
 
 DDSCAT (Discrete Dipole SCATtering) is a Fortran-code which calculates how light interacts with a particle using the Discrete Dipole Approximation (DDA). Very roughly, DDSCAT replaces a real dust grain by small dipoles and solves interaction of light with these dipoles, from which it then computes absorption and scattering. Since it needs to solve the interaction of each dipole, increasing the number of dipoles becomes more and more expensive. The mathematical details of DDA are however not needed for a first application of this tool.
+
+For first-time users, it is recommended to directly go to the [quickstart guide](#quickstart--setting-up-a-first-ddscat-run).
 
 ## 3. Installing DDSCAT
 
@@ -1061,6 +683,386 @@ for a new simulation.
 
 
 ---
+
+
+## Quickstart — Setting up a first DDSCAT run
+
+The basic workflow is:
+
+```text
+install DDSCAT
+      ↓
+edit input.toml
+      ↓
+generate input files
+      ↓
+run DDSCAT
+      ↓
+check the run
+      ↓
+plot the results
+```
+
+For your first test, **do not modify the Python scripts or `ddscat.par` manually**.  
+In most cases, you only need to edit a copy of `input.toml`.
+
+---
+
+### 1. Clone the repository
+
+```bash
+git clone <repository-url>
+cd ddscat-for-beginners
+```
+
+---
+
+### 2. Install and compile DDSCAT
+
+DDSCAT itself is **not included** in this repository.
+
+Download DDSCAT 7.3.4 and the example package from the official DDSCAT website.
+
+A useful directory structure is for example:
+
+```text
+~/DDA/
+├── src/
+│   └── ddscat
+├── examples_exp/
+├── diel/
+└── doc/
+```
+
+Compile DDSCAT:
+
+```bash
+cd ~/DDA/src
+make ddscat
+```
+
+Check that the executable exists:
+
+```bash
+ls -l ~/DDA/src/ddscat
+```
+
+If the file is there, DDSCAT is ready to use.
+
+---
+
+### 3. Install the Python requirements
+
+The helper scripts require Python 3.11 or newer.
+
+Install the required packages:
+
+```bash
+python3 -m pip install numpy matplotlib scipy
+```
+
+---
+
+### 4. Create your own input file
+
+Do not edit the repository example directly. Make a copy:
+
+```bash
+cp input.toml my_input.toml
+```
+
+Then open it:
+
+```bash
+nano my_input.toml
+```
+
+or use your preferred editor.
+
+For a first run, the most important settings are:
+
+```toml
+[paths]
+
+ddscat_executable = "/home/USER/DDA/src/ddscat"
+run_directory = "/path/to/your/ddscat_run"
+material_file = "/home/USER/DDA/diel/astrosil"
+```
+
+Make sure all three paths exist.
+
+---
+
+### 5. Choose a simple target
+
+For your first calculation, using DDSCAT's built-in `ELLIPSOID` target is easiest because no `shape.dat` file is required.
+
+For example:
+
+```toml
+[target]
+
+shape = "ELLIPSOID"
+shape_parameters = [50.0, 50.0, 50.0]
+```
+
+This describes a spherical dipole target.
+
+**Important:** `50` is **not** the grain radius in micrometres.  
+It approximately describes the number of dipole spacings across the particle.
+
+Set the actual physical grain radius separately:
+
+```toml
+[effective_radius]
+
+minimum_um = 1.0
+maximum_um = 1.0
+count = 1
+spacing = "LIN"
+```
+
+For example, this gives a grain with an effective radius of
+
+```text
+a_eff = 1 µm
+```
+
+---
+
+### 6. Choose a small wavelength grid for testing
+
+Do not start with hundreds or thousands of wavelengths.
+
+A small first test could be:
+
+```toml
+[wavelength]
+
+minimum_um = 1.0
+maximum_um = 10.0
+count = 20
+spacing = "LIN"
+```
+
+Once everything works, you can increase the wavelength resolution.
+
+For the first run, leave the numerical parameters at their defaults unless you know why you need to change them:
+
+```toml
+[numerics]
+
+tolerance = 1.0e-5
+max_iterations = 1000
+
+solver = "PBCGS2"
+fft = "GPFAFT"
+polarizability = "GKDLDR"
+```
+
+---
+
+### 7. Generate the DDSCAT input files
+
+From the repository directory, run:
+
+```bash
+python3 generate_ddscat.py my_input.toml
+```
+
+The configured run directory should now contain at least:
+
+```text
+ddscat.par
+diel.dat
+```
+
+For a `FROM_FILE` target it will additionally contain:
+
+```text
+shape.dat
+```
+
+For your first run, it is worth checking that `ddscat.par` was actually created:
+
+```bash
+cat /path/to/your/ddscat_run/ddscat.par
+```
+
+You normally do **not** need to edit this file manually.
+
+---
+
+### 8. Run DDSCAT
+
+#### On a local machine (most likely for starters)
+
+Run:
+
+```bash
+bash main.sh my_input.toml
+```
+
+#### On a Slurm cluster (useful for more expensive calculations later on)
+
+First check the `#SBATCH` settings at the top of `main.sh` and adapt them to your cluster if necessary.
+
+Then submit:
+
+```bash
+sbatch main.sh my_input.toml
+```
+
+Check whether the job is running:
+
+```bash
+squeue -u $USER
+```
+
+A standard DDSCAT build is serial, so requesting additional CPUs normally does not make the calculation faster!
+
+---
+
+### 9. Check whether the run worked
+
+After DDSCAT finishes, run:
+
+```bash
+python3 check_run.py my_input.toml
+```
+
+For a successful run you should see something similar to:
+
+```text
+qtable rows: 20 / 20
+status: DDSCAT normal termination
+```
+
+The most important part is:
+
+```text
+DDSCAT normal termination
+```
+
+If fewer wavelength rows than expected are present, the calculation probably stopped before completing all wavelengths.
+
+A common error is:
+
+```text
+FATAL ERROR IN PROCEDURE: ZBCG2WP
+ITERN>ITERMX
+```
+
+This means that the iterative solver did not converge within the allowed number of iterations.
+
+Do not immediately increase `max_iterations`. First check the wavelength, material properties and dipole resolution.
+
+---
+
+### 10. Make a first plot
+
+If the run completed successfully:
+
+```bash
+python3 plot_qtable.py my_input.toml
+```
+
+This creates:
+
+```text
+qtable_overview.png
+```
+
+inside the run directory.
+
+The plot shows the main DDSCAT efficiency factors:
+
+```text
+Qabs   absorption
+Qsca   scattering
+Qext   extinction
+```
+
+with
+
+```text
+Qext = Qabs + Qsca
+```
+
+---
+
+### What should I look at after my first successful run?
+
+The most important DDSCAT output file for a beginner is:
+
+```text
+qtable
+```
+
+It contains wavelength-dependent quantities such as:
+
+```text
+Qext
+Qabs
+Qsca
+g
+```
+
+More detailed information is stored in files such as:
+
+```text
+wXXXrXXX.avg
+wXXXrXXXkXXX.sca
+target.out
+ddscat.log_000
+```
+
+You do not need to understand all of these for your first calculation.
+
+---
+
+### The complete beginner workflow
+
+Once DDSCAT is installed, the workflow for most new calculations is simply:
+
+```bash
+cp input.toml my_input.toml
+
+nano my_input.toml
+
+python3 generate_ddscat.py my_input.toml
+
+sbatch main.sh my_input.toml
+
+python3 check_run.py my_input.toml
+
+python3 plot_qtable.py my_input.toml
+```
+
+or, without Slurm:
+
+```bash
+bash main.sh my_input.toml
+```
+
+If this produces `DDSCAT normal termination` and `qtable_overview.png`, your basic DDSCAT setup works.
+
+From here you can start experimenting with:
+
+- different effective grain radii,
+- different wavelength ranges,
+- different materials,
+- higher dipole resolutions,
+- non-spherical targets,
+- porous grains,
+- or custom `shape.dat` files.
+
+The additional scripts in `scripts/` are optional and are **not required for running DDSCAT**.
+
+---
+
+
+
 
 ## 9. References and further information
 
