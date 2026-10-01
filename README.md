@@ -15,7 +15,7 @@ starting point for users who are new to DDSCAT.
 
 A more detailed introduction is available here:
 
-**[DDSCAT for beginners (PDF)](docs/ddscat_for_beginners.pdf)**
+**[DDSCAT for beginners (PDF)](scripts/ddscat_for_beginners.pdf)**
 
 The manual explains the main DDSCAT input files, `ddscat.par`, material files,
 custom `shape.dat` targets, important output files, convergence checks, and a
@@ -694,8 +694,9 @@ for a new simulation.
 
 ## The application example
 
-The example is a demonstration for application of the presented workflow.
-This folder contains example data for Astrosilicate (Draine 2003), which was pre-calculated using the Mie setting in optool (https://github.com/cdominik/optool).
+The example is a demonstration for application of the presented workflow. This directory contains routines for advanced applications and is still in active development. It can be safely ignored by first-time beginners, as it is not needed nor directly connected to the basic workflow presented in this repository!
+
+The folder contains example data for Astrosilicate (Draine 2003), which was pre-calculated using the Mie setting in optool (https://github.com/cdominik/optool).
 The pipeline presented here is able to calculate the absorption and scattering efficiency with a pre-defined target number of dipoles for different fixed grain sizes. 
 It then produces plots for visual comparison of convergence against the Mie-solution. Also calculated are RMSE-values for the scattering and absorption efficiencies.
 While this pipeline is currently being actively used and developed, it still might contain some bugs and errors, which are hopefully eliminated in the near future.
