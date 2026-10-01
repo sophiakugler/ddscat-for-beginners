@@ -40,7 +40,7 @@ interaction with light
 absorption + scattering
 ```
 
-More dipoles usually give a better representation of the particle, but also require more computation time. For your first DDSCAT calculation, you do not need to understand the mathematical details.
+More dipoles usually give a better representation of the particle, but also require more computation time. For basic DDSCAT calculations, in-depth understanding of the mathematical details is not needed.
 
 A more detailed introduction is available here:
 
@@ -61,9 +61,7 @@ cd ddscat-for-beginners
 
 ## 2.2 Install DDSCAT
 
-DDSCAT itself is **not included** in this repository.
-
-Download DDSCAT 7.3.4 and the example package from:
+DDSCAT itself is not included in this repository. Download DDSCAT 7.3.4 and the example package from:
 
 **https://ddscat.wikidot.com/downloads**
 
