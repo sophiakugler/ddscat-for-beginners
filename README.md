@@ -2,7 +2,7 @@
 
 This repository contains a small collection of notes and Python scripts for setting up, running, and analysing DDSCAT calculations. It was created during a 2-month summer internship at Christian-Albrechts-Universität zu Kiel and is intended as a practical starting point for users who are new to DDSCAT.
 
-> **\*\*Note:\*\*** Some of the Python and shell code in this repository was
+> Note: Some of the Python and shell code in this repository was
 > developed with assistance from large language models, including ChatGPT
 > (OpenAI). The scripts were reviewed, modified, and tested on the calculations
 > used during this project. Paths and numerical parameters should still be
@@ -64,7 +64,7 @@ plot the results
 
 ```
 
-For your first test, **\*\*do not modify the Python scripts or `ddscat.par` manually\*\***.  In most cases, you only need to edit a copy of `input.toml`.
+For your first test, **\*\*do not modify the Python scripts or `ddscat.par` manually.  In most cases, you only need to edit a copy of `input.toml`.
 
 ---
 
@@ -81,7 +81,7 @@ cd ddscat-for-beginners
 
 ### 2. Install and compile DDSCAT
 
-DDSCAT itself is **\*\*not included\*\*** in this repository. Download DDSCAT 7.3.4 and the example package from the official DDSCAT website. Download DDSCAT 7.3.4 from the official DDSCAT download page: **\*\*https\://ddscat.wikidot.com/downloads\*\*** Download both: 1\. **\*\*DDSCAT 7.3.4 FORTRAN code\*\*** 2\. **\*\*DDSCAT 7.3.4 Examples\*\*** The example package is needed for the `examples_exp` directory used throughout this repository. A useful directory structure is for example:
+DDSCAT itself is **\*\*not included in this repository. Download DDSCAT 7.3.4 and the example package from the official DDSCAT website. Download DDSCAT 7.3.4 from the official DDSCAT download page: **\*\*https\://ddscat.wikidot.com/downloads Download both: 1\. **\*\*DDSCAT 7.3.4 FORTRAN code 2\. **\*\*DDSCAT 7.3.4 Examples The example package is needed for the `examples_exp` directory used throughout this repository. A useful directory structure is for example:
 
 ```text
 
@@ -172,7 +172,7 @@ shape_parameters = [50.0, 50.0, 50.0]
 
 ```
 
-This describes a spherical dipole target. **\*\*Important:\*\*** `50` is **\*\*not\*\*** the grain radius in micrometres.  It approximately describes the number of dipole spacings across the particle. Set the actual physical grain radius separately:
+This describes a spherical dipole target. **\*\*Important: `50` is **\*\*not the grain radius in micrometres.  It approximately describes the number of dipole spacings across the particle. Set the actual physical grain radius separately:
 
 ```toml
 
@@ -258,7 +258,7 @@ cat /path/to/your/ddscat_run/ddscat.par
 
 ```
 
-You normally do **\*\*not\*\*** need to edit this file manually.
+You normally do **\*\*not need to edit this file manually.
 
 ---
 
@@ -422,7 +422,7 @@ DDSCAT (Discrete Dipole SCATtering) is a Fortran-code which calculates how light
 
 ## 3. Documentation
 
-A more detailed introduction is available here: **\*\*[DDSCAT for beginners (PDF)](**&#x64;dscat_for_beginners.pd&#x66;**)\*\*** The manual explains the main DDSCAT input files, `ddscat.par`, material files, custom `shape.dat` targets, important output files, convergence checks, and a complete example calculation.
+A more detailed introduction is available here: **\*\*[DDSCAT for beginners (PDF)](**&#x64;dscat_for_beginners.pd&#x66;**) The manual explains the main DDSCAT input files, `ddscat.par`, material files, custom `shape.dat` targets, important output files, convergence checks, and a complete example calculation.
 
 ---
 
@@ -487,7 +487,7 @@ The main scripts are:
 - `check_run.py`: checks how many wavelength/radius combinations finished and inspects the DDSCAT log
 - `plot_qtable.py`: makes a first overview plot from `qtable`
 
-The additional scripts in `scripts/` are optional examples used during the project. They are **\*\*not required to run DDSCAT\*\***. They can be adapted for creating custom targets, visualising `shape.dat`, comparing calculations, and analysing runtimes.
+The additional scripts in `scripts/` are optional examples used during the project. They are **\*\*not required to run DDSCAT. They can be adapted for creating custom targets, visualising `shape.dat`, comparing calculations, and analysing runtimes.
 
 ---
 
@@ -535,7 +535,7 @@ shape_parameters = [70.0, 70.0, 70.0]
 
 ```
 
-all three dimensions are equal, so the target is a sphere with approximately `D/d = 70`. The value `70` is **\*\*not\*\*** a physical radius in micrometres. The physical grain size is set separately by the effective radius. Increasing the values, for example from `[50, 50, 50]` to `[70, 70, 70]`, represents the same physical grain with more dipoles and therefore a finer DDA resolution, but also increases the computational cost. Different values produce a non-spherical ellipsoid. For example,
+all three dimensions are equal, so the target is a sphere with approximately `D/d = 70`. The value `70` is **\*\*not a physical radius in micrometres. The physical grain size is set separately by the effective radius. Increasing the values, for example from `[50, 50, 50]` to `[70, 70, 70]`, represents the same physical grain with more dipoles and therefore a finer DDA resolution, but also increases the computational cost. Different values produce a non-spherical ellipsoid. For example,
 
 ```toml
 
@@ -983,8 +983,8 @@ Available DDSCAT spacing options are:
 
 - Official DDSCAT download page:
 
-**\*\*https\://ddscat.wikidot.com/downloads\*\***
+**\*\*https\://ddscat.wikidot.com/downloads
 
 - Optool repository:
 
-**\*\*https\://github.com/cdominik/optool\*\***
+**\*\*https\://github.com/cdominik/optool
