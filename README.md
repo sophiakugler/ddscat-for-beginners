@@ -15,7 +15,7 @@ starting point for users who are new to DDSCAT.
 
 A more detailed introduction is available here:
 
-**[DDSCAT for beginners (PDF)](scripts/ddscat_for_beginners.pdf)**
+**[DDSCAT for beginners (PDF)](main/ddscat_for_beginners.pdf)**
 
 The manual explains the main DDSCAT input files, `ddscat.par`, material files,
 custom `shape.dat` targets, important output files, convergence checks, and a
