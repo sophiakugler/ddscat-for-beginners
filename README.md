@@ -11,6 +11,21 @@ starting point for users who are new to DDSCAT.
 > used during this project. Paths and numerical parameters should still be
 > checked before using them for a new setup.
 
+## Overview
+
+This Readme should provide all information necessary to use this repository for setting up a first successful DDSCAT-run.
+
+- [Documentation](#1-documentation)
+- [Purpose](#2-what-is-the-purpose-of-this-repository)
+- [Installing DDSCAT](#3-installing-ddscat)
+- [Python requierments](#4-python-requirements)
+- [DDSCAT run workflow](#5-ddscat-run-workflow)
+- [Additional scripts](#6-additional-analysis-scripts)
+- [Plotting choices](#7-plotting-choices)
+- [Minimal workflow example](#8-minimal-workflow)
+- [Quickstart guide](#9-quickstart--setting-up-a-first-ddscat-run)
+- [References](#10-references-and-further-information)
+
 ## 1. Documentation
 
 A more detailed introduction is available here:
@@ -685,7 +700,7 @@ for a new simulation.
 ---
 
 
-## Quickstart — Setting up a first DDSCAT run
+## 9. Quickstart — Setting up a first DDSCAT run
 
 The basic workflow is:
 
@@ -1064,7 +1079,7 @@ The additional scripts in `scripts/` are optional and are **not required for run
 
 
 
-## 9. References and further information
+## 10. References and further information
 
 - B. T. Draine & P. J. Flatau, DDSCAT User Guide
 - B. T. Draine & P. J. Flatau (1994), *Discrete-dipole approximation for
